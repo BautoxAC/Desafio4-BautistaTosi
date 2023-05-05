@@ -1,1 +1,27 @@
-[]
+[
+  {
+    "productos": [
+      {
+        "idProduct": "1",
+        "quantity": 7
+      },
+      {
+        "idProduct": "2",
+        "quantity": 8
+      },
+      {
+        "idProduct": "4",
+        "quantity": 1
+      }
+    ],
+    "idCarrito": "0"
+  },
+  {
+    "productos": [
+      {
+        "asad": "a"
+      }
+    ],
+    "idCarrito": "1"
+  }
+]
