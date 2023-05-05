@@ -78,13 +78,12 @@ export class ProductManager {
         if (productFindId) {
             return newMessage("success", "Found successfully", productFindId)
         } else {
-            console.log("Not Found")
             return newMessage("failure", "Not Found", "")
         }
     }
     async deleteProduct(id) {
         let productToDelete = this.getProductById(id).data
-        if (!productToDelete) { return }
+        if (!productToDelete) { return this.getProductById(id)}
         let positionProductToDelete = this.products.indexOf(productToDelete)
         this.products.splice(positionProductToDelete, 1)
         const updateIds = () => {

@@ -25,3 +25,7 @@ productsRouter.put("/:pid", async(req, res) => {
     const productPropsToUpdate = req.body
     return res.status(200).json(newMessage(await list.updateProduct(Id,productPropsToUpdate)))
 })
+productsRouter.delete("/:pid", async(req, res) => {
+    const Id = req.params.pid
+    return res.status(200).json(await list.deleteProduct(Id))
+})
