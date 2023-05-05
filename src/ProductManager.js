@@ -29,14 +29,13 @@ export class ProductManager {
             this.products.push({ ...product, id: id, status: true })
             await fs.promises.writeFile(this.path, JSON.stringify(this.products, null, 2))
             const lastAdded = this.products[this.products.length - 1]
-            return newMessage("success", "Added successfully", lastAdded)
+            return newMessage("success", "Product added successfully", lastAdded)
         }
     }
     async updateProduct(id, propsReceivedToUpdate) {
         let productToUpdate = this.getProductById(id).data
-        let isArray = propsReceivedToUpdate.length !== undefined
         const messages = []
-        if (!productToUpdate || isArray) {
+        if (!productToUpdate || Array.isArray(propsReceivedToUpdate)) {
             return newMessage("failure", "The product was not found or is an Array", "")
         }
         let propToUpdateFound = []
@@ -56,8 +55,7 @@ export class ProductManager {
             }
             i++
         }
-        const valuesToUpdate=Object.keys(propsReceivedToUpdate)
-        console.log(valuesToUpdate)
+        const valuesToUpdate = Object.keys(propsReceivedToUpdate)
         if (propToUpdateFound.some(element => element === false)) {
             const indexFalse = []
             propToUpdateFound.forEach((el, i) => {
@@ -83,7 +81,7 @@ export class ProductManager {
     }
     async deleteProduct(id) {
         let productToDelete = this.getProductById(id).data
-        if (!productToDelete) { return this.getProductById(id)}
+        if (!productToDelete) { return this.getProductById(id) }
         let positionProductToDelete = this.products.indexOf(productToDelete)
         this.products.splice(positionProductToDelete, 1)
         const updateIds = () => {
@@ -97,5 +95,57 @@ export class ProductManager {
         }
         await fs.promises.writeFile(this.path, JSON.stringify(this.products, null, 2))
         return newMessage("success", "Deleted successfully", productToDelete)
+    }
+}
+export class CartManager {
+    constructor(path) {
+        if (!fs.existsSync(path)) {
+            fs.writeFileSync(path, "[]")
+        }
+        this.path = path
+        this.carts = JSON.parse(fs.readFileSync(path, "utf-8"))
+    }
+    getCarts() {
+        return this.carts
+    }
+    getCartById(id) {
+        let cartFindId = this.carts.find((cart) => cart.idCarrito === id)
+        if (cartFindId) {
+            return newMessage("success", "Found successfully", cartFindId.productos)
+        } else {
+            return newMessage("failure", "Not Found", "")
+        }
+    }
+    async addCart(productList) {
+        if (!Array.isArray(productList)) {
+            return newMessage("failure", "the product list must be an array", "")
+        }
+        let maxId = JSON.stringify(this.carts.length)
+        let id = maxId
+        this.carts.push({ productos: productList, idCarrito: id })
+        await fs.promises.writeFile(this.path, JSON.stringify(this.carts, null, 2))
+        const lastAdded = this.carts[this.carts.length - 1]
+        return newMessage("success", "Cart added successfully", lastAdded)
+    }
+    async addProduct(idCart, idProduct) {
+        const listProducts = new ProductManager("src/public/products.json");
+        const cart = this.carts.find(cart => cart.idCarrito === idCart)
+        const product = listProducts.getProductById(idProduct).data
+        const productRepeated = cart.productos.find(pro => pro.idProduct === product.id)
+        let messageReturn = {}
+        if (productRepeated) {
+            const positionProductRepeated = cart.productos.indexOf(productRepeated)
+            if (cart.productos[positionProductRepeated].quantity < product.stock) {
+                cart.productos[positionProductRepeated].quantity++
+                messageReturn = newMessage("success", "Product repeated: quantity added correctly", cart)
+            } else {
+                messageReturn = newMessage("failure", "Product repeated: quantity is higher than the stock", cart)
+            }
+        } else {
+            cart.productos.push({ idProduct: product.id, quantity: 1 })
+            messageReturn = newMessage("success", "Product added correctly", cart)
+        }
+        await fs.promises.writeFile(this.path, JSON.stringify(this.carts, null, 2))
+        return messageReturn
     }
 }
