@@ -7,16 +7,16 @@ productsRouter.get("/", (req, res) => {
     const products = list.getProducts()
     const { limit } = req.query
     const productsLimited = products.filter((pro) => Number(pro.id) < limit)
-    const messageProductsLimited = newMessage("listado de productos limitados", productsLimited)
-    const messageAllProducts = newMessage("listado de productos", list.getProducts())
+    const messageProductsLimited = newMessage("success","listado de productos limitados", productsLimited)
+    const messageAllProducts = newMessage("success","listado de productos", list.getProducts())
     return res.status(200).json(Number(limit) ? messageProductsLimited : messageAllProducts)
 })
 productsRouter.get("/:pid", (req, res) => {
     const Id = req.params.pid
-    return res.status(200).json(newMessage("producto por id", list.getProductById(Id)))
+    return res.status(200).json(newMessage("success","producto por id", list.getProductById(Id)))
 })
-productsRouter.post("/", (req, res) => {
+productsRouter.post("/", async(req, res) =>  {
     const newProduct = req.body
     const { title, description, price, thumbnail, code, stock } = newProduct
-    return res.status(200).json(list.addProduct(title, description, price, thumbnail, code, stock))
+    return res.status(200).json(await list.addProduct(title, description, price, thumbnail, code, stock))
 })

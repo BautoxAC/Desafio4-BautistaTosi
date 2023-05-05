@@ -6,7 +6,8 @@
     "stock": 4,
     "price": 20,
     "thumbnail": "./../../img/productos/JeansB.png",
-    "description": "foto de unos jeans azules"
+    "description": "foto de unos jeans azules",
+    "status": true
   },
   {
     "title": "MediasC",
@@ -15,7 +16,8 @@
     "stock": 10,
     "price": 30,
     "thumbnail": "./../../img/productos/MediasC.png",
-    "description": "foto de medias color celeste"
+    "description": "foto de medias color celeste",
+    "status": true
   },
   {
     "title": "MediasB",
@@ -24,7 +26,8 @@
     "stock": 8,
     "price": 20,
     "thumbnail": "./../../img/productos/MediasB.png",
-    "description": "for de medias de color azul"
+    "description": "for de medias de color azul",
+    "status": true
   },
   {
     "title": "Bluney",
@@ -33,7 +36,8 @@
     "stock": 12,
     "price": 20,
     "thumbnail": "./../../img/productos/Bluney.png",
-    "description": "foto de remera azul oscuro sin estampado"
+    "description": "foto de remera azul oscuro sin estampado",
+    "status": true
   },
   {
     "title": "PantC",
@@ -42,7 +46,8 @@
     "stock": 14,
     "price": 45,
     "thumbnail": "./../../img/productos/PantC.png",
-    "description": "foto de pantalon de color azul"
+    "description": "foto de pantalon de color azul",
+    "status": true
   },
   {
     "title": "DarkC",
@@ -51,7 +56,8 @@
     "stock": 20,
     "price": 20,
     "thumbnail": "./../../img/productos/DarkC.png",
-    "description": "foto de remera celeste oscuro"
+    "description": "foto de remera celeste oscuro",
+    "status": true
   },
   {
     "title": "Celestyn",
@@ -60,7 +66,8 @@
     "stock": 3,
     "price": 20,
     "thumbnail": "./../../img/productos/Celestyn.png",
-    "description": "foto de brazalete de un color celeste"
+    "description": "foto de brazalete de un color celeste",
+    "status": true
   },
   {
     "title": "Celest",
@@ -69,7 +76,8 @@
     "stock": 11,
     "price": 50,
     "thumbnail": "./../../img/productos/Celest.png",
-    "description": "foto de un vestido celeste"
+    "description": "foto de un vestido celeste",
+    "status": true
   },
   {
     "title": "LightE",
@@ -78,7 +86,8 @@
     "stock": 16,
     "price": 15,
     "thumbnail": "./../../img/productos/LightE.png",
-    "description": "foto de remera con estampado pequeño y color celeste con raya blanca"
+    "description": "foto de remera con estampado pequeño y color celeste con raya blanca",
+    "status": true
   },
   {
     "title": "LightB",
@@ -87,7 +96,8 @@
     "stock": 6,
     "price": 50,
     "thumbnail": "./../../img/productos/LightB.png",
-    "description": "foto de vestido LightB color azul"
+    "description": "foto de vestido LightB color azul",
+    "status": true
   },
   {
     "title": "LightE2",
@@ -96,6 +106,7 @@
     "stock": 7,
     "price": 20,
     "thumbnail": "./../../img/productos/LightE2.png",
-    "description": "foto de remera de color azul llamada lightE2"
+    "description": "foto de remera de color azul llamada lightE2",
+    "status": true
   }
 ]

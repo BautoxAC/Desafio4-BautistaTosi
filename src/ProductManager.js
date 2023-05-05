@@ -1,4 +1,5 @@
 import fs from "fs"
+import { newMessage } from "./utils.js"
 export class ProductManager {
     constructor(path) {
         if (!fs.existsSync(path)) {
@@ -21,49 +22,51 @@ export class ProductManager {
         }
         let codeVerificator = this.products.find((product) => product.code === code)
         if (codeVerificator) {
-            console.log("Error, the code is repeated")
+            return newMessage("failure", "Error, the code is repeated", "")
         } else if (!addPro) {
-            console.log("Error, data is incomplete please provide more data")
+            return newMessage("failure", "Error, data is incomplete please provide more data", "")
         } else {
-            this.products.push({ ...product, id: id })
+            this.products.push({ ...product, id: id, status: true })
             await fs.promises.writeFile(this.path, JSON.stringify(this.products, null, 2))
+            const lastAdded = this.products[this.products.length - 1]
+            return newMessage("success", "Added successfully", lastAdded)
         }
     }
-    async updateProduct(id, ToUpd) {
-        let productToUpd = this.getProductById(id)
-        let isArray = ToUpd.length !== undefined
-        if (!productToUpd || isArray) {
+    async updateProduct(id, propsReceivedToUpdate) {
+        let productToUpdadate = this.getProductById(id)
+        let isArray = propsReceivedToUpdate.length !== undefined
+        if (!productToUpdadate || isArray) {
             console.log("Bad argument")
             return
         }
-        let ToUpdateFound = []
+        let propToUpdateFound = []
         let i = 0
-        for (const propArg in ToUpd) {
-            if (propArg === "id") {
+        for (const propRecieved in propsReceivedToUpdate) {
+            if (propRecieved === "id") {
                 console.log("You cannot change the id")
                 continue
             }
-            for (const propProduct in productToUpd) {
-                if (propProduct === propArg) {
-                    productToUpd[propProduct] = ToUpd[propArg]
-                    ToUpdateFound[i] = true
+            for (const propProduct in productToUpdadate) {
+                if (propProduct === propRecieved) {
+                    productToUpdadate[propProduct] = propsReceivedToUpdate[propRecieved]
+                    propToUpdateFound[i] = true
                     break
                 }
-                ToUpdateFound[i] = false
+                propToUpdateFound[i] = false
             }
             i++
         }
-        if (ToUpdateFound.some(el => el === false)) {
+        if (propToUpdateFound.some(element => element === false)) {
             const indexFalse = []
-            ToUpdateFound.forEach((el, i) => {
+            propToUpdateFound.forEach((el, i) => {
                 if (el === false) {
                     indexFalse.push(i)
                 }
             })
             console.log(`The props Number: ${indexFalse} were provided incorrectly`)
         }
-        console.log(productToUpd)
         await fs.promises.writeFile(this.path, JSON.stringify(this.products, null, 2))
+        return newMessage("success","Updated successfully",productToUpdadate)
     }
     getProducts() {
         return this.products
@@ -71,27 +74,27 @@ export class ProductManager {
     getProductById(id) {
         let productFindId = this.products.find((product) => product.id === id)
         if (productFindId) {
-            return productFindId
+            return newMessage("success", "Found successfully", productFindId)
         } else {
             console.log("Not Found")
-            return {status:"failure",message:"producto no encontrado",data: "Not Found"}
+            return newMessage("failure", "Not Found", "")
         }
     }
     async deleteProduct(id) {
         let productToDelete = this.getProductById(id)
         if (!productToDelete) { return }
-        let positionProduct = this.products.indexOf(productToDelete)
-        this.products.splice(positionProduct, 1)
+        let positionProductToDelete = this.products.indexOf(productToDelete)
+        this.products.splice(positionProductToDelete, 1)
         const updateIds = () => {
             this.products.forEach((pro) => {
                 let positionProduct = this.products.indexOf(pro)
                 pro.id = JSON.stringify(positionProduct)
             })
         }
-        console.log(this.products)
         if (this.products.length > 0) {
             updateIds()
         }
         await fs.promises.writeFile(this.path, JSON.stringify(this.products, null, 2))
+        return newMessage("success","Deleted successfully",productToDelete)
     }
 }
