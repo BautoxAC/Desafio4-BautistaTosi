@@ -20,3 +20,8 @@ productsRouter.post("/", async(req, res) =>  {
     const { title, description, price, thumbnail, code, stock } = newProduct
     return res.status(200).json(await list.addProduct(title, description, price, thumbnail, code, stock))
 })
+productsRouter.put("/:pid", async(req, res) => {
+    const Id = req.params.pid
+    const productPropsToUpdate = req.body
+    return res.status(200).json(newMessage(await list.updateProduct(Id,productPropsToUpdate)))
+})

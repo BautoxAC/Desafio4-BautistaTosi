@@ -33,22 +33,22 @@ export class ProductManager {
         }
     }
     async updateProduct(id, propsReceivedToUpdate) {
-        let productToUpdadate = this.getProductById(id)
+        let productToUpdate = this.getProductById(id).data
         let isArray = propsReceivedToUpdate.length !== undefined
-        if (!productToUpdadate || isArray) {
-            console.log("Bad argument")
-            return
+        const messages = []
+        if (!productToUpdate || isArray) {
+            return newMessage("failure", "The product was not found or is an Array", "")
         }
         let propToUpdateFound = []
         let i = 0
         for (const propRecieved in propsReceivedToUpdate) {
             if (propRecieved === "id") {
-                console.log("You cannot change the id")
+                messages.push(" and You cannot change the id")
                 continue
             }
-            for (const propProduct in productToUpdadate) {
+            for (const propProduct in productToUpdate) {
                 if (propProduct === propRecieved) {
-                    productToUpdadate[propProduct] = propsReceivedToUpdate[propRecieved]
+                    productToUpdate[propProduct] = propsReceivedToUpdate[propRecieved]
                     propToUpdateFound[i] = true
                     break
                 }
@@ -56,17 +56,19 @@ export class ProductManager {
             }
             i++
         }
+        const valuesToUpdate=Object.keys(propsReceivedToUpdate)
+        console.log(valuesToUpdate)
         if (propToUpdateFound.some(element => element === false)) {
             const indexFalse = []
             propToUpdateFound.forEach((el, i) => {
                 if (el === false) {
-                    indexFalse.push(i)
+                    indexFalse.push(` ${i + 1} (${valuesToUpdate[i]}) `)
                 }
             })
-            console.log(`The props Number: ${indexFalse} were provided incorrectly`)
+            messages.push(`,but The props Number: ${indexFalse} were provided incorrectly`)
         }
         await fs.promises.writeFile(this.path, JSON.stringify(this.products, null, 2))
-        return newMessage("success","Updated successfully",productToUpdadate)
+        return newMessage("success", "Updated successfully" + (messages).toString(), productToUpdate)
     }
     getProducts() {
         return this.products
@@ -81,7 +83,7 @@ export class ProductManager {
         }
     }
     async deleteProduct(id) {
-        let productToDelete = this.getProductById(id)
+        let productToDelete = this.getProductById(id).data
         if (!productToDelete) { return }
         let positionProductToDelete = this.products.indexOf(productToDelete)
         this.products.splice(positionProductToDelete, 1)
@@ -95,6 +97,6 @@ export class ProductManager {
             updateIds()
         }
         await fs.promises.writeFile(this.path, JSON.stringify(this.products, null, 2))
-        return newMessage("success","Deleted successfully",productToDelete)
+        return newMessage("success", "Deleted successfully", productToDelete)
     }
 }

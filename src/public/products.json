@@ -20,11 +20,11 @@
     "status": true
   },
   {
-    "title": "MediasB",
+    "title": "aa",
     "id": "2",
     "code": "medias2",
     "stock": 8,
-    "price": 20,
+    "price": 21,
     "thumbnail": "./../../img/productos/MediasB.png",
     "description": "for de medias de color azul",
     "status": true
