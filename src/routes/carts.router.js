@@ -1,17 +1,26 @@
 import express from "express"
-import { ProductManager } from "../ProductManager.js"
+import { CartManager } from "../ProductManager.js"
 import { newMessage } from "../utils.js"
 export const cartsRouter = express.Router()
-const list = new ProductManager("src/public/carts.json")
+const list = new CartManager("src/public/carts.json")
 cartsRouter.get("/", (req, res) => {
-    const carts = list.getProducts()
+    const carts = list.getCarts()
     const { limit } = req.query
     const cartsLimited = carts.filter((pro) => Number(pro.id) < limit)
-    const messageCartsLimited = newMessage("success","listado de carritos limitados", cartsLimited)
-    const messageAllCarts = newMessage("success","listado de carritos", list.getProducts())
+    const messageCartsLimited = newMessage("success", "listado de carritos limitados", cartsLimited)
+    const messageAllCarts = newMessage("success", "listado de carritos", carts)
     return res.status(200).json(Number(limit) ? messageCartsLimited : messageAllCarts)
 })
-cartsRouter.get("/:pid", (req, res) => {
-    const Id = req.params.pid
-    return res.status(200).json(newMessage("success","carrito por id", list.getProductById(Id)))
+cartsRouter.get("/:cid", (req, res) => {
+    const Id = req.params.cid
+    return res.status(200).json(newMessage("success", "carrito por id", list.getCartById(Id)))
+})
+cartsRouter.post("/", async (req, res) => {
+    const newCart = req.body
+    return res.status(200).json(await list.addCart(newCart))
+})
+cartsRouter.post("/:cid/products/:pid", async (req, res) => {
+    const idCart = req.params.cid
+    const idProduct = req.params.pid
+    return res.status(200).json(await list.addProduct(idCart, idProduct))
 })
