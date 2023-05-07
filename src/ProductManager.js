@@ -9,7 +9,7 @@ export class ProductManager {
         this.products = JSON.parse(fs.readFileSync(path, "utf-8"))
     }
     async addProduct(title, description, price, thumbnail, code, stock) {
-        let product = { title, description, price, thumbnail, code, stock }
+        let product = { title, description, price: Number(price), thumbnail, code, stock: Number(stock) }
         let maxId = JSON.stringify(this.products.length)
         let id = maxId
         let addPro = true
@@ -24,7 +24,7 @@ export class ProductManager {
         if (codeVerificator) {
             return newMessage("failure", "Error, the code is repeated", "")
         } else if (!addPro) {
-            return newMessage("failure", "Error, data is incomplete please provide more data", "")
+            return newMessage("failure", "Error, data is incomplete please provide more data and the stock and the pice must be numbers", "")
         } else {
             this.products.push({ ...product, id: id, status: true })
             await fs.promises.writeFile(this.path, JSON.stringify(this.products, null, 2))
@@ -41,21 +41,21 @@ export class ProductManager {
         let propToUpdateFound = []
         let i = 0
         for (const propRecieved in propsReceivedToUpdate) {
+            propToUpdateFound[i] = false
             if (propRecieved === "id") {
-                messages.push(" and You cannot change the id")
-                continue
-            }
-            if (propRecieved === "code" && this.products.find(pro => pro.code === propsReceivedToUpdate[propRecieved])) {
-                messages.push(" and you cannot make the code iqual to other product")
-                continue
-            }
-            for (const propProduct in productToUpdate) {
-                if (propProduct === propRecieved) {
-                    productToUpdate[propProduct] = propsReceivedToUpdate[propRecieved]
-                    propToUpdateFound[i] = true
-                    break
+                messages.push(" you cannot change the id")
+            } else if (propRecieved === "code" && this.products.find(pro => pro.code === propsReceivedToUpdate[propRecieved])) {
+                messages.push(" you cannot make the code iqual to other product")
+            } else if ((propRecieved === "price" || propRecieved === "stock") && typeof(propsReceivedToUpdate[propRecieved]) !== "number") {
+                messages.push(` the ${propRecieved} must be Number`)
+            }else{
+                for (const propProduct in productToUpdate) {
+                    if (propProduct === propRecieved) {
+                        productToUpdate[propProduct] = propsReceivedToUpdate[propRecieved]
+                        propToUpdateFound[i] = true
+                        break
+                    }
                 }
-                propToUpdateFound[i] = false
             }
             i++
         }

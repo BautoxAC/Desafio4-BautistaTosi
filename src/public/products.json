@@ -23,8 +23,8 @@
     "title": "aa",
     "id": "2",
     "code": "aa",
-    "stock": 8,
-    "price": 21,
+    "stock": 1,
+    "price": 23,
     "thumbnail": "./../../img/productos/MediasB.png",
     "description": "for de medias de color azul",
     "status": true
