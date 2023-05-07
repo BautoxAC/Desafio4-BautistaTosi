@@ -22,7 +22,7 @@
   {
     "title": "aa",
     "id": "2",
-    "code": "medias2",
+    "code": "aa",
     "stock": 8,
     "price": 21,
     "thumbnail": "./../../img/productos/MediasB.png",
@@ -107,16 +107,6 @@
     "price": 20,
     "thumbnail": "./../../img/productos/LightE2.png",
     "description": "foto de remera de color azul llamada lightE2",
-    "status": true
-  },
-  {
-    "title": "producto prueba",
-    "description": "Este es un producto prueba",
-    "price": 200,
-    "thumbnail": "Sin imagen",
-    "code": "abca1hj2a3",
-    "stock": 25,
-    "id": "11",
     "status": true
   }
 ]

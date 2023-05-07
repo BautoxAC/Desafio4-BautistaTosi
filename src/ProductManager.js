@@ -45,6 +45,10 @@ export class ProductManager {
                 messages.push(" and You cannot change the id")
                 continue
             }
+            if (propRecieved === "code" && this.products.find(pro => pro.code === propsReceivedToUpdate[propRecieved])) {
+                messages.push(" and you cannot make the code iqual to other product")
+                continue
+            }
             for (const propProduct in productToUpdate) {
                 if (propProduct === propRecieved) {
                     productToUpdate[propProduct] = propsReceivedToUpdate[propRecieved]
@@ -63,7 +67,7 @@ export class ProductManager {
                     indexFalse.push(` ${i + 1} (${valuesToUpdate[i]}) `)
                 }
             })
-            messages.push(`,but The props Number: ${indexFalse} were provided incorrectly`)
+            messages.push(`The props Number: ${indexFalse} were provided incorrectly`)
         }
         await fs.promises.writeFile(this.path, JSON.stringify(this.products, null, 2))
         return newMessage("success", "Updated successfully" + (messages).toString(), productToUpdate)
@@ -130,6 +134,9 @@ export class CartManager {
     async addProduct(idCart, idProduct) {
         const listProducts = new ProductManager("src/public/products.json");
         const cart = this.carts.find(cart => cart.idCarrito === idCart)
+        if (!cart) {
+            return newMessage("failure", "cart not found", "")
+        }
         const product = listProducts.getProductById(idProduct).data
         const productRepeated = cart.productos.find(pro => pro.idProduct === product.id)
         let messageReturn = {}

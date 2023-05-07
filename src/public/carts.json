@@ -20,8 +20,20 @@
     "productos": [
       {
         "asad": "a"
+      },
+      {
+        "idProduct": "2",
+        "quantity": 3
       }
     ],
     "idCarrito": "1"
+  },
+  {
+    "productos": [
+      {
+        "asad": "a"
+      }
+    ],
+    "idCarrito": "2"
   }
 ]
