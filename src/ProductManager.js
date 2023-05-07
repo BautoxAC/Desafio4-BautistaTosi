@@ -117,13 +117,10 @@ export class CartManager {
             return newMessage("failure", "Not Found", "")
         }
     }
-    async addCart(productList) {
-        if (!Array.isArray(productList)) {
-            return newMessage("failure", "the product list must be an array", "")
-        }
+    async addCart() {
         let maxId = JSON.stringify(this.carts.length)
         let id = maxId
-        this.carts.push({ productos: productList, idCarrito: id })
+        this.carts.push({ productos: [], idCarrito: id })
         await fs.promises.writeFile(this.path, JSON.stringify(this.carts, null, 2))
         const lastAdded = this.carts[this.carts.length - 1]
         return newMessage("success", "Cart added successfully", lastAdded)
@@ -135,6 +132,9 @@ export class CartManager {
             return newMessage("failure", "cart not found", "")
         }
         const product = listProducts.getProductById(idProduct).data
+        if (!product) {
+            return newMessage("failure", "product not found", "")
+        }
         const productRepeated = cart.productos.find(pro => pro.idProduct === product.id)
         let messageReturn = {}
         if (productRepeated) {
@@ -143,7 +143,7 @@ export class CartManager {
                 cart.productos[positionProductRepeated].quantity++
                 messageReturn = newMessage("success", "Product repeated: quantity added correctly", cart)
             } else {
-                messageReturn = newMessage("failure", "Product repeated: quantity is higher than the stock", cart)
+                messageReturn = newMessage("failure", "Product repeated: quantity is iqual to the stock", cart)
             }
         } else {
             cart.productos.push({ idProduct: product.id, quantity: 1 })

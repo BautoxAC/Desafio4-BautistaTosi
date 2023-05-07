@@ -9,8 +9,7 @@ cartsRouter.get("/:cid", (req, res) => {
     return res.status(200).json(newMessage("success", "carrito por id", list.getCartById(Id)))
 })
 cartsRouter.post("/", async (req, res) => {
-    const newCart = req.body
-    return res.status(200).json(await list.addCart(newCart))
+    return res.status(200).json(await list.addCart())
 })
 cartsRouter.post("/:cid/products/:pid", async (req, res) => {
     const idCart = req.params.cid

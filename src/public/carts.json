@@ -37,5 +37,26 @@
       }
     ],
     "idCarrito": "2"
+  },
+  {
+    "productos": [],
+    "idCarrito": "3"
+  },
+  {
+    "productos": [],
+    "idCarrito": "4"
+  },
+  {
+    "productos": [],
+    "idCarrito": "5"
+  },
+  {
+    "productos": [
+      {
+        "idProduct": "11",
+        "quantity": 3
+      }
+    ],
+    "idCarrito": "6"
   }
 ]
