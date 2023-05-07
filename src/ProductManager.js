@@ -109,9 +109,6 @@ export class CartManager {
         this.path = path
         this.carts = JSON.parse(fs.readFileSync(path, "utf-8"))
     }
-    getCarts() {
-        return this.carts
-    }
     getCartById(id) {
         let cartFindId = this.carts.find((cart) => cart.idCarrito === id)
         if (cartFindId) {
