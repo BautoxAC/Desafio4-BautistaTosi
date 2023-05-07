@@ -1,11 +1,12 @@
 import express from "express"
-/* import { ProductManager } from "../ProductManager.js" */
 import { cartsRouter } from "./routes/carts.router.js"
 import { productsRouter } from "./routes/products.router.js"
 import { __dirname } from "./utils.js"
 import path from "path"
+
 const app = express()
 const port = 8080
+
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
