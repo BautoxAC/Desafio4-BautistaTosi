@@ -19,11 +19,12 @@
   {
     "productos": [
       {
-        "asad": "a"
-      },
-      {
         "idProduct": "2",
         "quantity": 3
+      },
+      {
+        "idProduct": "1",
+        "quantity": 1
       }
     ],
     "idCarrito": "1"
@@ -31,7 +32,8 @@
   {
     "productos": [
       {
-        "asad": "a"
+        "idProduct": "6",
+        "quantity": 2
       }
     ],
     "idCarrito": "2"
