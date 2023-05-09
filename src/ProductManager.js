@@ -10,8 +10,8 @@ export class ProductManager {
         this.path = path
         this.products = JSON.parse(fs.readFileSync(path, "utf-8"))
     }
-    async addProduct(title, description, price,thumbnail, code, stock) {
-        let product = { title, description, price: Number(price), thumbnail:[thumbnail], code, stock: Number(stock) }
+    async addProduct(title, description, price, thumbnails, code, stock) {
+        let product = { title, description, price: Number(price), thumbnails: [thumbnails], code, stock: Number(stock) }
         let id = uuidv4()
         while (this.products.some(pro => pro.id === id)) {
             id = uuidv4()
@@ -46,13 +46,18 @@ export class ProductManager {
         let i = 0
         for (const propRecieved in propsReceivedToUpdate) {
             propToUpdateFound[i] = false
-            if (propRecieved === "id") {
-                messages.push(" you cannot change the id")
+            if (propRecieved === "id" || propRecieved === "status") {
+                messages.push(` you cannot change the ${propRecieved}`)
+            } else if (propRecieved === "thumbnails" && !Array.isArray(propRecieved)) {
+                productToUpdate.thumbnails.push(propsReceivedToUpdate[propRecieved])
+                propToUpdateFound[i] = true
             } else if (propRecieved === "code" && this.products.find(pro => pro.code === propsReceivedToUpdate[propRecieved])) {
                 messages.push(" you cannot make the code iqual to other product")
-            } else if ((propRecieved === "price" || propRecieved === "stock") && typeof(propsReceivedToUpdate[propRecieved]) !== "number") {
+            } else if ((propRecieved === "price" || propRecieved === "stock") && typeof (propsReceivedToUpdate[propRecieved]) !== "number") {
                 messages.push(` the ${propRecieved} must be Number`)
-            }else{
+            } else if (typeof (propsReceivedToUpdate[propRecieved]) !== "string" && (propRecieved === "title" || propRecieved === "code" || propRecieved === "description" || propRecieved === "category")) {
+                messages.push(` the ${propRecieved} must be String`)
+            } else {
                 for (const propProduct in productToUpdate) {
                     if (propProduct === propRecieved) {
                         productToUpdate[propProduct] = propsReceivedToUpdate[propRecieved]

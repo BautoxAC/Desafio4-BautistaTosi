@@ -1,11 +1,25 @@
 [
   {
-    "title": "JeansB",
+    "title": "dasasd",
     "id": "4d11339f-18cc-441e-95cc-7c5c1c2ad01b",
-    "code": "pantalones1",
+    "code": "dsfsdf",
     "stock": 1,
     "price": 23,
-    "thumbnail": [],
+    "thumbnails": [
+      "thumbnails",
+      "sadasd",
+      "sadasd",
+      "sadasd",
+      "sadasd",
+      "sadasd",
+      "sadasd",
+      "sadasd",
+      "sadasd",
+      "sadasd",
+      "sadasd",
+      "sadasd",
+      "sadasd"
+    ],
     "description": "foto de unos jeans azules",
     "status": true
   },
@@ -15,7 +29,7 @@
     "code": "medias1",
     "stock": 10,
     "price": 30,
-    "thumbnail": [],
+    "thumbnails": [],
     "description": "foto de medias color celeste",
     "status": true
   },
@@ -25,7 +39,7 @@
     "code": "aa",
     "stock": 1,
     "price": 23,
-    "thumbnail": [],
+    "thumbnails": [],
     "description": "for de medias de color azul",
     "status": true
   },
@@ -35,7 +49,7 @@
     "code": "remeras3",
     "stock": 12,
     "price": 20,
-    "thumbnail": [],
+    "thumbnails": [],
     "description": "foto de remera azul oscuro sin estampado",
     "status": true
   },
@@ -45,7 +59,7 @@
     "code": "pantalones3",
     "stock": 14,
     "price": 45,
-    "thumbnail": [],
+    "thumbnails": [],
     "description": "foto de pantalon de color azul",
     "status": true
   },
@@ -55,7 +69,7 @@
     "code": "remer4as",
     "stock": 20,
     "price": 20,
-    "thumbnail": [],
+    "thumbnails": [],
     "description": "foto de remera celeste oscuro",
     "status": true
   },
@@ -65,7 +79,7 @@
     "code": "acceso5rios",
     "stock": 3,
     "price": 20,
-    "thumbnail": [],
+    "thumbnails": [],
     "description": "foto de brazalete de un color celeste",
     "status": true
   },
@@ -75,7 +89,7 @@
     "code": "vestid76os",
     "stock": 11,
     "price": 50,
-    "thumbnail": [],
+    "thumbnails": [],
     "description": "foto de un vestido celeste",
     "status": true
   },
@@ -85,7 +99,7 @@
     "code": "remer768976as",
     "stock": 16,
     "price": 15,
-    "thumbnail": [],
+    "thumbnails": [],
     "description": "foto de remera con estampado pequeño y color celeste con raya blanca",
     "status": true
   },
@@ -95,7 +109,7 @@
     "code": "vesti67dos",
     "stock": 6,
     "price": 50,
-    "thumbnail": [],
+    "thumbnails": [],
     "description": "foto de vestido LightB color azul",
     "status": true
   },
@@ -105,7 +119,7 @@
     "code": "rem67eras",
     "stock": 7,
     "price": 20,
-    "thumbnail": [],
+    "thumbnails": [],
     "description": "foto de remera de color azul llamada lightE2",
     "status": true
   },
@@ -113,7 +127,7 @@
     "title": "producto prueba",
     "description": "Este es un producto prueba",
     "price": 200,
-    "thumbnail": [
+    "thumbnails": [
       "Sin imagen"
     ],
     "code": "a1hj2a3",
