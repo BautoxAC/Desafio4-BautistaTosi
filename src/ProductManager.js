@@ -1,5 +1,7 @@
 import fs from "fs"
 import { newMessage } from "./utils.js"
+import { v4 as uuidv4 } from 'uuid'
+
 export class ProductManager {
     constructor(path) {
         if (!fs.existsSync(path)) {
@@ -8,10 +10,12 @@ export class ProductManager {
         this.path = path
         this.products = JSON.parse(fs.readFileSync(path, "utf-8"))
     }
-    async addProduct(title, description, price, thumbnail, code, stock) {
-        let product = { title, description, price: Number(price), thumbnail, code, stock: Number(stock) }
-        let maxId = JSON.stringify(this.products.length)
-        let id = maxId
+    async addProduct(title, description, price,thumbnail, code, stock) {
+        let product = { title, description, price: Number(price), thumbnail:[thumbnail], code, stock: Number(stock) }
+        let id = uuidv4()
+        while (this.products.some(pro => pro.id === id)) {
+            id = uuidv4()
+        }
         let addPro = true
         const productValues = Object.values(product)
         for (const prop of productValues) {
@@ -24,7 +28,7 @@ export class ProductManager {
         if (codeVerificator) {
             return newMessage("failure", "Error, the code is repeated", "")
         } else if (!addPro) {
-            return newMessage("failure", "Error, data is incomplete please provide more data and the stock and the pice must be numbers", "")
+            return newMessage("failure", "Error, data is incomplete please provide more data and the stock and the price must be numbers", "")
         } else {
             this.products.push({ ...product, id: id, status: true })
             await fs.promises.writeFile(this.path, JSON.stringify(this.products, null, 2))
@@ -36,7 +40,7 @@ export class ProductManager {
         let productToUpdate = this.getProductById(id).data
         const messages = []
         if (!productToUpdate || Array.isArray(propsReceivedToUpdate)) {
-            return newMessage("failure", "The product was not found or is an Array", "")
+            return newMessage("failure", "The product was not found or the data is an Array", "")
         }
         let propToUpdateFound = []
         let i = 0
@@ -88,15 +92,6 @@ export class ProductManager {
         if (!productToDelete) { return this.getProductById(id) }
         let positionProductToDelete = this.products.indexOf(productToDelete)
         this.products.splice(positionProductToDelete, 1)
-        const updateIds = () => {
-            this.products.forEach((pro) => {
-                let positionProduct = this.products.indexOf(pro)
-                pro.id = JSON.stringify(positionProduct)
-            })
-        }
-        if (this.products.length > 0) {
-            updateIds()
-        }
         await fs.promises.writeFile(this.path, JSON.stringify(this.products, null, 2))
         return newMessage("success", "Deleted successfully", productToDelete)
     }
@@ -118,8 +113,10 @@ export class CartManager {
         }
     }
     async addCart() {
-        let maxId = JSON.stringify(this.carts.length)
-        let id = maxId
+        let id = uuidv4()
+        while (this.carts.some(pro => pro.id === id)) {
+            id = uuidv4()
+        }
         this.carts.push({ productos: [], idCarrito: id })
         await fs.promises.writeFile(this.path, JSON.stringify(this.carts, null, 2))
         const lastAdded = this.carts[this.carts.length - 1]
