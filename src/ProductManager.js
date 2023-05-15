@@ -1,6 +1,7 @@
 import fs from "fs"
 import { newMessage } from "./utils.js"
 import { v4 as uuidv4 } from 'uuid'
+import { type } from "os"
 
 export class ProductManager {
     constructor(path) {
@@ -12,6 +13,7 @@ export class ProductManager {
     }
     async addProduct(title, description, price, thumbnails, code, stock) {
         let product = { title, description, price: Number(price), thumbnails: [thumbnails], code, stock: Number(stock) }
+        console.log(product)
         let id = uuidv4()
         while (this.products.some(pro => pro.id === id)) {
             id = uuidv4()
@@ -38,45 +40,32 @@ export class ProductManager {
     }
     async updateProduct(id, propsReceivedToUpdate) {
         let productToUpdate = this.getProductById(id).data
+        const valuesRecieved = Object.entries(propsReceivedToUpdate)
+        const valuesToUpdate = Object.keys(productToUpdate)
+        const dataTypes = Object.entries(productToUpdate).map((prop) => ({ key: prop[0], type: prop[0] === "thumbnails" ? "string" : typeof (prop[1]) }))
         const messages = []
         if (!productToUpdate || Array.isArray(propsReceivedToUpdate)) {
             return newMessage("failure", "The product was not found or the data is an Array", "")
         }
-        let propToUpdateFound = []
-        let i = 0
-        for (const propRecieved in propsReceivedToUpdate) {
-            propToUpdateFound[i] = false
-            if (propRecieved === "id" || propRecieved === "status") {
-                messages.push(` you cannot change the ${propRecieved}`)
-            } else if (propRecieved === "thumbnails" && !Array.isArray(propRecieved)) {
-                productToUpdate.thumbnails.push(propsReceivedToUpdate[propRecieved])
-                propToUpdateFound[i] = true
-            } else if (propRecieved === "code" && this.products.find(pro => pro.code === propsReceivedToUpdate[propRecieved])) {
-                messages.push(" you cannot make the code iqual to other product")
-            } else if ((propRecieved === "price" || propRecieved === "stock") && typeof (propsReceivedToUpdate[propRecieved]) !== "number") {
-                messages.push(` the ${propRecieved} must be Number`)
-            } else if (typeof (propsReceivedToUpdate[propRecieved]) !== "string" && (propRecieved === "title" || propRecieved === "code" || propRecieved === "description" || propRecieved === "category")) {
-                messages.push(` the ${propRecieved} must be String`)
+        const propToUpdateFound = valuesRecieved.map((prop) => {
+            const status = valuesToUpdate.some((propUpdate) => prop[0] === propUpdate && prop[0] !== "id" && prop[0] !== "status") 
+            return { entries: { key: prop[0], value: prop[1] }, status: status, type: typeof (prop[1]) }
+        })
+        for (let i = 0; i < propToUpdateFound.length; i++) {
+            const prop = propToUpdateFound[i]
+            const sameTypeAndKey = dataTypes.find((type) => type.type === prop.type && type.key === prop.entries.key)
+            const sameKey = dataTypes.find(type => type.key === prop.entries.key)
+            if (prop.status && sameTypeAndKey) {
+                if (prop.entries.key === "thumbnails") {
+                    const thumbnailRepeated=productToUpdate.thumbnails.some(thumbnail=>thumbnail===prop.entries.value)
+                    thumbnailRepeated ? messages.push(` The prop Number: ${i + 1} (${prop.entries.key}) has a value repeated`) : productToUpdate.thumbnails.push(prop.entries.value)
+                } else {
+                    productToUpdate[prop.entries.key] = prop.entries.value
+                }
             } else {
-                for (const propProduct in productToUpdate) {
-                    if (propProduct === propRecieved) {
-                        productToUpdate[propProduct] = propsReceivedToUpdate[propRecieved]
-                        propToUpdateFound[i] = true
-                        break
-                    }
-                }
+                messages.push(` The prop Number: ${i + 1} (${prop.entries.key}) was provided incorrectly`)
+                prop.status ? messages.push(`Must be ${sameKey?.type}`) : messages.push("The prop must be title, description, price, thumbnails, code or stock")
             }
-            i++
-        }
-        const valuesToUpdate = Object.keys(propsReceivedToUpdate)
-        if (propToUpdateFound.some(element => element === false)) {
-            const indexFalse = []
-            propToUpdateFound.forEach((el, i) => {
-                if (el === false) {
-                    indexFalse.push(` ${i + 1} (${valuesToUpdate[i]}) `)
-                }
-            })
-            messages.push(`The props Number: ${indexFalse} were provided incorrectly`)
         }
         await fs.promises.writeFile(this.path, JSON.stringify(this.products, null, 2))
         return newMessage("success", "Updated successfully" + (messages).toString(), productToUpdate)

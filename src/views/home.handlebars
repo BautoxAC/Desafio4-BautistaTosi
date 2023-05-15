@@ -1,0 +1,18 @@
+<div>
+    <h1>LISTADO DE PRODUCTOS:</h1>
+    <ol>
+        {{#each products}}
+        <li>
+            <h2>Nombre: {{this.title}}</h2>
+            <p>Descripcion: {{this.description}}</p>
+            <p>Stock: {{this.stock}}</p>
+            <p>Precio: {{this.price}}</p>
+            <p>Codigo: {{this.code}}</p>
+            <p>Id: {{this.id}}</p>
+            <p>Img: {{this.thumbnails[0]}}</p>
+            <button><img src="http://localhost:8080/assets/quitar.png" alt="Eliminar producto"
+                    title="Eliminar producto"></button>
+        </li>
+        {{/each}}
+    </ol>
+</div>

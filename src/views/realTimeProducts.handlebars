@@ -1,0 +1,44 @@
+<div>
+    <h1>LISTADO DE PRODUCTOS:</h1>
+    <ol id="list">
+        {{#each products}}
+        <li>
+            <h2>Nombre: {{this.title}}</h2>
+            <p>Descripcion: {{this.description}}</p>
+            <p>Stock: {{this.stock}}</p>
+            <p>Precio: {{this.price}}</p>
+            <p>Codigo: {{this.code}}</p>
+            <p>Id: {{this.id}}</p>
+            <p>Img: {{this.thumbnails}}</p>
+            <button><img src="http://localhost:8080/assets/quitar.png" alt="Eliminar producto"
+                    title="Eliminar producto"></button>
+        </li>
+        {{/each}}
+    </ol>
+    <form action=""> 
+        <fieldset>
+            <h2>Nuevo Producto</h2>
+            <label for="title">Nombre:</label>
+            <input type="text" id="title">
+            <hr>
+            <label for="description">Descripicion:</label>
+            <input type="text" id="description">
+            <hr>
+            <label for="stock">Stock:</label>
+            <input type="number" id="stock">
+            <hr>
+            <label for="price">Precio:</label>
+            <input type="number" id="price">
+            <hr>
+            <label for="code">Codigo:</label>
+            <input type="text" id="code">
+            <hr>
+            <label for="file">Imagen del producto:</label>
+            <input type="file" id="file">
+            <hr>
+            <input type="submit" id="buttonSumbit">
+        </fieldset>
+    </form>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
