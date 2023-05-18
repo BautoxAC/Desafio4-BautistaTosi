@@ -10,7 +10,7 @@
             <p>Codigo: {{this.code}}</p>
             <p>Id: {{this.id}}</p>
             <p>Img: {{this.thumbnails}}</p>
-            <button><img src="http://localhost:8080/assets/quitar.png" alt="Eliminar producto"
+            <button id="{{this.id}}"><img src="http://localhost:8080/assets/quitar.png" alt="Eliminar producto"
                     title="Eliminar producto"></button>
         </li>
         {{/each}}
@@ -41,4 +41,4 @@
     </form>
 </div>
 <script src="/socket.io/socket.io.js"></script>
-<script src="/js/index.js"></script>
+<script src="/js/indexSocket.js"></script>

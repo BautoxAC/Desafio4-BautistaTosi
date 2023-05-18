@@ -1,17 +1,5 @@
 [
   {
-    "title": "HeyYou",
-    "id": "4d11339f-18cc-441e-95cc-7c5c1c2ad01b",
-    "code": "dsfsdf",
-    "stock": 1,
-    "price": 23,
-    "thumbnails": [
-      "ads"
-    ],
-    "description": "foto de unos jeans azules",
-    "status": true
-  },
-  {
     "title": "MediasC",
     "id": "305d9725-f122-4074-ac9f-fb460868515f",
     "code": "medias1",
@@ -102,37 +90,15 @@
     "status": true
   },
   {
-    "title": "LightE2",
-    "id": "d85e1426-cea9-43a0-a4b0-2e20e9967a41",
-    "code": "rem67eras",
-    "stock": 7,
-    "price": 20,
-    "thumbnails": [],
-    "description": "foto de remera de color azul llamada lightE2",
-    "status": true
-  },
-  {
-    "title": "producto prueba",
-    "description": "Este es un producto prueba",
-    "price": 200,
+    "title": "vbn",
+    "description": "ncvb",
+    "price": 54,
     "thumbnails": [
-      "Sin imagen"
+      "http://localhost:8080/Concentración química.pdf"
     ],
-    "code": "a1hj2a3",
-    "stock": 25,
-    "id": "b1a7343c-33ce-40ca-a676-ca36a48965cb",
-    "status": true
-  },
-  {
-    "title": "producto prueba",
-    "description": "Este es un producto prueba",
-    "price": 200,
-    "thumbnails": [
-      "http://localhost:8080/Celest.png"
-    ],
-    "code": "a1hj2a32",
-    "stock": 25,
-    "id": "995a8ff9-35b7-4349-831e-8e053acbcf13",
+    "code": "hg6r5y4h",
+    "stock": 546,
+    "id": "5f55fd40-f28d-478d-a83d-dfa42d4da981",
     "status": true
   }
 ]

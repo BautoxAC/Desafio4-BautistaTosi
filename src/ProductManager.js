@@ -1,7 +1,6 @@
 import fs from "fs"
 import { newMessage } from "./utils.js"
 import { v4 as uuidv4 } from 'uuid'
-import { type } from "os"
 
 export class ProductManager {
     constructor(path) {
@@ -12,8 +11,7 @@ export class ProductManager {
         this.products = JSON.parse(fs.readFileSync(path, "utf-8"))
     }
     async addProduct(title, description, price, thumbnails, code, stock) {
-        let product = { title, description, price: Number(price), thumbnails: [thumbnails], code, stock: Number(stock) }
-        console.log(product)
+        let product = { title, description, price: Number(price), thumbnails: thumbnails!==undefined && [thumbnails], code, stock: Number(stock) }
         let id = uuidv4()
         while (this.products.some(pro => pro.id === id)) {
             id = uuidv4()
