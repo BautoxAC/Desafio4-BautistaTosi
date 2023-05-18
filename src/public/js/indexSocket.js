@@ -41,8 +41,8 @@ socket.on("newProduct_to_front", (product,products) => {
         alert(product.message)
     } else {
         alert(product.message)
+        renderProducts(products)
     }
-    renderProducts(products)
 })
 socket.on("msg_back_to_front_products", (products) => {
     for (let i = 0; i < products.length; i++) {

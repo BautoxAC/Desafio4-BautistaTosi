@@ -35,6 +35,7 @@ const httpServer = app.listen(port, () => {
 })
 const socketServer = new Server(httpServer)
 socketServer.on("connection", (socket) => {
+    console.log("cliente conectado")
     const list = new ProductManager("src/public/products.json")
     socket.on("msg_front_to_back", async (data) => {
         const { title, description, price, thumbnails, code, stock } = data.data
