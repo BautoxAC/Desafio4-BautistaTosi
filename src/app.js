@@ -1,10 +1,10 @@
-import { express } from "express"
+import express from "express"
 import { cartsRouter } from "./routes/carts.router.js"
 import { productsRouter } from "./routes/products.router.js"
 import { __dirname } from "./utils.js"
-import { path } from "path"
+import path from "path"
 import { Server } from "socket.io"
-import { handlebars } from "express-handlebars"
+import handlebars from "express-handlebars"
 import { productRouterHtml } from "./routes/productRouterHtml.router.js"
 import { productsSocketRouter } from "./routes/productsSocketRouter.router.js"
 import { ProductManager } from "./ProductManager.js"
@@ -39,12 +39,12 @@ socketServer.on("connection", (socket) => {
     const list = new ProductManager("src/public/products.json")
     socket.on("msg_front_to_back", async (data) => {
         const { title, description, price, thumbnails, code, stock } = data.data
-        socket.emit("newProduct_to_front", await list.addProduct(title, description, price, thumbnails, code, stock), list.getProducts())
+        socket.emit("newProduct_to_front",await list.addProduct(title, description, price, thumbnails, code, stock ),list.getProducts())
     })
-    socket.emit("msg_back_to_front_products", list.getProducts())
-    socket.on("msg_front_to_back_delete_product", async (product) => {
+    socket.emit("msg_back_to_front_products",list.getProducts())
+    socket.on("msg_front_to_back_delete_product", async(product)=>{
         await list.deleteProduct(product.id)
-        socket.emit("msg_front_to_back_deleted", list.getProducts())
+        socket.emit("msg_front_to_back_deleted",list.getProducts())
     })
 })
 
