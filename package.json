@@ -10,5 +10,8 @@
     "dev":"nodemon src/app.js",
     "start": "node src/app.js"
   },
-  "type": "module"
+  "type": "module",
+  "engines": {
+    "node": "16.x"
+  }
 }
