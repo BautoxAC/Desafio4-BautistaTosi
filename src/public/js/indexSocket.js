@@ -1,4 +1,3 @@
-//FRONT
 const socket = io()
 const code = document.getElementById("code")
 const title = document.getElementById("title")
@@ -11,6 +10,7 @@ function renderProducts(products) {
     list.innerHTML = ""
     for (let i = 0; i < products.length; i++) {
         const product = products[i]
+        const imgs = product.thumbnails.map((thumbnail) => (`<img src="${thumbnail}">`))
         list.innerHTML += `<li>
         <h2>Nombre: ${product.title}</h2>
         <p>Descripcion: ${product.description}</p>
@@ -18,7 +18,7 @@ function renderProducts(products) {
         <p>Precio: ${product.price}</p>
         <p>Codigo: ${product.code}</p>
         <p>Id: ${product.id}</p>
-        <p>Img: ${product.thumbnails}</p>
+        <p>Img: ${imgs}</p>
         <button id="${product.id}"><img src="http://localhost:8080/assets/quitar.png" alt="Eliminar producto"
         title="Eliminar producto"></button>
         </li>`
@@ -31,12 +31,11 @@ function renderProducts(products) {
         })
     }
 }
-document.getElementById("buttonSumbit").addEventListener("click", (e) => {
-    e.preventDefault()
+document.getElementById("buttonSumbit").addEventListener("click", () => {
     const data = { title: title.value, description: description.value, price: Number(price.value), thumbnails: file?.files[0]?.name ? "http://localhost:8080/" + file?.files[0]?.name : undefined, code: code.value, stock: Number(stock.value) }
     socket.emit("msg_front_to_back", { data })
 })
-socket.on("newProduct_to_front", (product,products) => {
+socket.on("newProduct_to_front", (product, products) => {
     if (product.status === "failure") {
         alert(product.message)
     } else {
