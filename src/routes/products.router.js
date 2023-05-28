@@ -20,10 +20,7 @@ productsRouter.get("/:pid", (req, res) => {
 })
 
 productsRouter.post("/", uploader.single("file"), async (req, res) => {
-    const newProduct = req.body
-    newProduct.thumbnail = "http://localhost:8080/" + req.file?.filename
-    const { title, description, price, thumbnail, code, stock } = newProduct
-    return res.status(200).json(await list.addProduct(title, description, price, thumbnail, code, stock))
+    res.redirect("/realtimeproducts")
 })
 
 productsRouter.put("/:pid", async (req, res) => {
