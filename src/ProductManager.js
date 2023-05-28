@@ -11,7 +11,7 @@ export class ProductManager {
         this.products = JSON.parse(fs.readFileSync(path, "utf-8"))
     }
     async addProduct(title, description, price, thumbnails, code, stock) {
-        let product = { title, description, price: Number(price), thumbnails: thumbnails!==undefined && [thumbnails], code, stock: Number(stock) }
+        let product = { title, description, price: Number(price), thumbnails: thumbnails !== undefined && [thumbnails], code, stock: Number(stock) }
         let id = uuidv4()
         while (this.products.some(pro => pro.id === id)) {
             id = uuidv4()
@@ -46,7 +46,7 @@ export class ProductManager {
             return newMessage("failure", "The product was not found or the data is an Array", "")
         }
         const propToUpdateFound = valuesRecieved.map((prop) => {
-            const status = valuesToUpdate.some((propUpdate) => prop[0] === propUpdate && prop[0] !== "id" && prop[0] !== "status") 
+            const status = valuesToUpdate.some((propUpdate) => prop[0] === propUpdate && prop[0] !== "id" && prop[0] !== "status")
             return { entries: { key: prop[0], value: prop[1] }, status: status, type: typeof (prop[1]) }
         })
         for (let i = 0; i < propToUpdateFound.length; i++) {
@@ -55,7 +55,7 @@ export class ProductManager {
             const sameKey = dataTypes.find(type => type.key === prop.entries.key)
             if (prop.status && sameTypeAndKey) {
                 if (prop.entries.key === "thumbnails") {
-                    const thumbnailRepeated=productToUpdate.thumbnails.some(thumbnail=>thumbnail===prop.entries.value)
+                    const thumbnailRepeated = productToUpdate.thumbnails.some(thumbnail => thumbnail === prop.entries.value)
                     thumbnailRepeated ? messages.push(` The prop Number: ${i + 1} (${prop.entries.key}) has a value repeated`) : productToUpdate.thumbnails.push(prop.entries.value)
                 } else {
                     productToUpdate[prop.entries.key] = prop.entries.value

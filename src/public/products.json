@@ -1,13 +1,11 @@
 [
   {
-    "title": "HeyYou",
+    "title": "dasasd",
     "id": "4d11339f-18cc-441e-95cc-7c5c1c2ad01b",
     "code": "dsfsdf",
     "stock": 1,
     "price": 23,
-    "thumbnails": [
-      "ads"
-    ],
+    "thumbnails": [],
     "description": "foto de unos jeans azules",
     "status": true
   },
@@ -77,7 +75,9 @@
     "code": "vestid76os",
     "stock": 11,
     "price": 50,
-    "thumbnails": [],
+    "thumbnails": [
+      "http://localhost:8080/assets/Celest.png"
+    ],
     "description": "foto de un vestido celeste",
     "status": true
   },
@@ -109,30 +109,6 @@
     "price": 20,
     "thumbnails": [],
     "description": "foto de remera de color azul llamada lightE2",
-    "status": true
-  },
-  {
-    "title": "producto prueba",
-    "description": "Este es un producto prueba",
-    "price": 200,
-    "thumbnails": [
-      "Sin imagen"
-    ],
-    "code": "a1hj2a3",
-    "stock": 25,
-    "id": "b1a7343c-33ce-40ca-a676-ca36a48965cb",
-    "status": true
-  },
-  {
-    "title": "producto prueba",
-    "description": "Este es un producto prueba",
-    "price": 200,
-    "thumbnails": [
-      "http://localhost:8080/Celest.png"
-    ],
-    "code": "a1hj2a32",
-    "stock": 25,
-    "id": "995a8ff9-35b7-4349-831e-8e053acbcf13",
     "status": true
   }
 ]

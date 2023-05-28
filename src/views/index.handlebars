@@ -9,7 +9,7 @@
             <p>Precio: {{this.price}}</p>
             <p>Codigo: {{this.code}}</p>
             <p>Id: {{this.id}}</p>
-            <p>Img: {{this.thumbnails}}</p>
+            <p>Img: {{#each this.thumbnails}}<img src="{{this}}">{{/each}}</p>
         </li>
         {{/each}}
     </ol>
